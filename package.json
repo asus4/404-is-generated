@@ -1,0 +1,14 @@
+{
+  "name": "404-gen",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
+  }
+}
