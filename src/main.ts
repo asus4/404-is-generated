@@ -60,4 +60,4 @@ URL:
   }
 }
 
-await main();
+main();
