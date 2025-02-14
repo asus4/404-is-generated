@@ -104,10 +104,12 @@ class OpenAIClient implements ILlmClient {
     }
 
     async generateImage(prompt: string): Promise<HTMLImageElement> {
+        console.log(prompt);
         throw new Error("Not implemented.");
     }
 
     async * streamText(systemPrompt: string, userPrompt: string): AsyncGenerator<string> {
+        console.log(systemPrompt, userPrompt);
         throw new Error("Not implemented.");
     }
 }

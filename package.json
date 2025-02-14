@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build --base=./",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "copy-404": "cp index.html 404.html"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
