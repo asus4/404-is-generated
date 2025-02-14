@@ -8,32 +8,34 @@
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <title>404-is-generated</title>
 </head>
-
+<!-- tailwind css style -->
 <body class="bg-gray-50 text-gray-700">
-  <div id="index-page" class="max-w-xl mx-auto mt-64">
-    <h1 class="text-3xl font-bold text-gray-700">404 is generated</h1>
-    <p>This page is not available at /404-is-generated/index.html. Input your dream
-      URL. 404 Pages will generate a new page at your URL below.</p>
+  <div id="index-page" class="max-w-xl mx-auto mt-32">
+    <h1 class="mb-12 text-3xl font-bold">404 IS GENERATED</h1>
+    <p>Any page doesn't exist. But 404 page generates an imaginary page based on the URL.</p>
     <div class="mt-12 flex justify-center">
       <form class="flex items-center w-full max-w-md">
-        <input id="api-key" type="text" class="m-1 flex-grow border-1 border-gray-300 rounded-md"
-          placeholder="Gemini API key" />
-        <button id="check" type="submit" class="m-1 border-1 border-gray-300 rounded-md">Check</button>
-        <span id="result" class="m-1 text-sm text-gray-700"></span>
+        <input id="api-key" type="text" class="m-1 flex-grow border-1 border-gray-300 rounded-full px-4 py-2"
+          placeholder="Enter OpenAI or Gemini API key" />
+        <button id="check" type="submit" class="m-1 border-1 border-gray-300 rounded-full px-4 py-2">Check</button>
+        <span id="result" class="m-1 text-sm"></span>
       </form>
     </div>
     <div class="mt-6">
-      <h2 class="text-xl font-semibold text-gray-700">Examples</h2>
+      <h2 class="text-xl font-semibold">Example 404 pages:</h2>
       <ul class="mt-4 list-disc pl-4 space-y-1">
-        <li><a href="/diary/2025-02-14.html">diary/2025-02-14.html</a></li>
-        <li><a href="/product/shoes/3.html">product/shoes/3.html</a></li>
-        <li><a href="/about/my-dog.html">about/my-dog.html</a></li>
+        <li><a href="/diary/2025-02-14.html" class="underline">diary/2025-02-14.html</a></li>
+        <li><a href="/product/shoes/3.html" class="underline">product/shoes/3.html</a></li>
+        <li><a href="/about/my-dog.html" class="underline">about/my-dog.html</a></li>
       </ul>
+      <p class="mt-4 font-semibold">Or type anything in the address bar</p>
     </div>
   </div>
+  <!-- index-page -->
   <div id="404-page">
 
   </div>
+  <!-- 404-page -->
 
   <script type="module" src="/src/main.ts"></script>
 </body>

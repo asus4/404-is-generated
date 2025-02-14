@@ -2,21 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/src/styles.css" rel="stylesheet">
-    <title>404-is-generated</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/src/styles.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <title>404-is-generated</title>
 </head>
+<!-- tailwind css style -->
 
-<body>
-    <h1>This is 404 page</h1>
-    <div id="content"></div>
-    <!-- Initial Settings -->
-    <div id="initial-settings-view">
-        <input type="text" id="api-key" placeholder="Enter your API key" />
-        <button id="submit-api-key">Submit</button>
+<body class="bg-gray-50 text-gray-700">
+  <div id="index-page" class="max-w-xl mx-auto mt-32">
+    <h1 class="mb-12 text-3xl font-bold">404 IS GENERATED</h1>
+    <p>All pages don't exist other than index.html. But 404 page generates an imaginary page based on the URL.</p>
+    <div class="mt-12 flex justify-center">
+      <form class="flex items-center w-full max-w-md">
+        <input id="api-key" type="text" class="m-1 flex-grow border-1 border-gray-300 rounded-md"
+          placeholder="Enter OpenAI or Gemini API key" />
+        <button id="check" type="submit" class="m-1 border-1 border-gray-300 rounded-md">Check</button>
+        <span id="result" class="m-1 text-sm"></span>
+      </form>
     </div>
-    <script type="module" src="/src/main.ts"></script>
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold">Example 404 pages:</h2>
+      <ul class="mt-4 list-disc pl-4 space-y-1">
+        <li><a href="/diary/2025-02-14.html" class="underline">diary/2025-02-14.html</a></li>
+        <li><a href="/product/shoes/3.html" class="underline">product/shoes/3.html</a></li>
+        <li><a href="/about/my-dog.html" class="underline">about/my-dog.html</a></li>
+      </ul>
+      <p class="mt-4 font-semibold">Or type anything in the address bar</p>
+    </div>
+  </div>
+  <!-- index-page -->
+  <div id="404-page">
+
+  </div>
+  <!-- 404-page -->
+
+  <script type="module" src="/src/main.ts"></script>
 </body>
 
 </html>

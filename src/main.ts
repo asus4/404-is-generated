@@ -1,18 +1,5 @@
 import { getLlmClient } from "./LlmClient";
-
-const SYSTEM_PROMPT = `You are an experienced web designer and front-end engineer. Based on the URL provided, imagine the content, theme the web page, and generate actual, usable HTML code.
-
-[Conditions]
-
-1. The URL does not represent the actual page content; instead, create the HTML code based on an "imagined" content derived from the URL’s string or structure.
-2. The generated HTML should conform to the latest web standards. It must include a responsive design, appropriate meta tags, a title, header, navigation, main content area, footer, etc.
-3. The page’s theme and atmosphere should be based on keywords or the structure present in the URL, making it intuitively understandable for the user.
-4. Include CSS as needed (either inline or as an internal stylesheet) to ensure the code is visually appealing.
-5. Only export the HTML code, Don't show your text.
-
-[Input]
-URL: 
-`;
+import SYSTEM_PROMPT from "./prompt.txt?raw";
 
 async function pageIndex() {
 
@@ -46,15 +33,14 @@ async function page404() {
   console.log("Generating content for 404 page...");
   const url = `https://example.com${window.location.pathname}`;
   console.log(SYSTEM_PROMPT, url);
-  const response = await client.generate(SYSTEM_PROMPT, url);
+  const text = await client.generate(SYSTEM_PROMPT, url);
 
   const content = document.getElementById("404-page")!;
 
-  if (!response) {
-    console.error("Invalid response structure:", response);
+  if (!text) {
+    console.error("Invalid response structure:", text);
     content.innerHTML = "Failed to generate content.";
   } else {
-    const text = response!;
     // remove ```html and ``` from the generated text
     content.innerHTML = text.replace(/```html/g, "").replace(/```/g, "").trim();
   }
