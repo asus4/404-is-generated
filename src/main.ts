@@ -3,9 +3,9 @@ import SYSTEM_PROMPT from "./prompt.txt?raw";
 
 async function pageIndex() {
 
-  const key = localStorage.getItem("api-key");
-  if (key) {
-    console.log("API key found:", key);
+  const apiKey = localStorage.getItem("api-key");
+  if (apiKey) {
+    console.log("API key found:", apiKey);
   }
   else {
     console.log("No API key found.");
@@ -15,9 +15,10 @@ async function pageIndex() {
 
   // Wait for the user to submit the API key
   checkButton.addEventListener("click", async () => {
-    const apiKey = apiKeyInput.value;
-    localStorage.setItem("api-key", apiKey);
-    console.log("API key saved:", apiKey);
+    const newApiKey = apiKeyInput.value;
+    // TODO: validate
+    localStorage.setItem("api-key", newApiKey);
+    console.log("API key saved:", newApiKey);
   });
 }
 
@@ -31,18 +32,34 @@ async function page404() {
   const client = getLlmClient(apiKey!);
 
   console.log("Generating content for 404 page...");
-  const url = `https://example.com${window.location.pathname}`;
+  const url = `${window.location.pathname}`;
   console.log(SYSTEM_PROMPT, url);
-  const text = await client.generate(SYSTEM_PROMPT, url);
 
   const content = document.getElementById("404-page")!;
 
-  if (!text) {
-    console.error("Invalid response structure:", text);
-    content.innerHTML = "Failed to generate content.";
-  } else {
-    // remove ```html and ``` from the generated text
-    content.innerHTML = text.replace(/```html/g, "").replace(/```/g, "").trim();
+  const stream = client.streamText(SYSTEM_PROMPT, url);
+
+  let innerHtml = "";
+  let hasHtmlTagStarted = false;
+  for await (const chunk of stream) {
+    console.log("Chunk:", chunk);
+
+    if (!hasHtmlTagStarted) {
+      // find <html
+      const htmlIndex = chunk.indexOf("<html");
+      if (htmlIndex < 0) {
+        continue;
+      }
+      // remove everything before <html
+      innerHtml += chunk.substring(htmlIndex);
+      hasHtmlTagStarted = true;
+    }
+    else {
+      // remove ```html or ``` from the chunk
+      innerHtml += chunk.replace("```", "");
+    }
+    content.innerHTML = innerHtml;
+
   }
 }
 
