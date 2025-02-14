@@ -5,7 +5,7 @@ async function pageIndex() {
 
   const apiKey = localStorage.getItem("api-key");
   if (apiKey) {
-    console.log("API key found:", apiKey);
+    console.log("API key found");
   }
   else {
     console.log("No API key found.");
