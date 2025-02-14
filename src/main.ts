@@ -1,6 +1,6 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { getLlmClient } from "./LlmClient";
 
-const BASE_PROMPT = `You are an experienced web designer and front-end engineer. Based on the URL provided below, imagine the content, theme the web page, and generate actual, usable HTML code.
+const SYSTEM_PROMPT = `You are an experienced web designer and front-end engineer. Based on the URL provided, imagine the content, theme the web page, and generate actual, usable HTML code.
 
 [Conditions]
 
@@ -14,49 +14,56 @@ const BASE_PROMPT = `You are an experienced web designer and front-end engineer.
 URL: 
 `;
 
-async function initialSettingAsync() {
-  const initialSettings = document.getElementById("initial-settings-view")!;
+async function pageIndex() {
+
+  const key = localStorage.getItem("api-key");
+  if (key) {
+    console.log("API key found:", key);
+  }
+  else {
+    console.log("No API key found.");
+  }
   const apiKeyInput = document.getElementById("api-key") as HTMLInputElement;
-  const submitButton = document.getElementById("submit-api-key")!;
+  const checkButton = document.getElementById("check")!;
 
   // Wait for the user to submit the API key
-  submitButton.addEventListener("click", async () => {
+  checkButton.addEventListener("click", async () => {
     const apiKey = apiKeyInput.value;
     localStorage.setItem("api-key", apiKey);
-    initialSettings.style.display = "none";
+    console.log("API key saved:", apiKey);
   });
 }
 
-async function main() {
-  // Check for an already saved API key
-  const initialSettings = document.getElementById("initial-settings-view")!;
-  if (localStorage.getItem("api-key")) {
-    initialSettings.style.display = "none";
-  } else {
-    initialSettings.style.display = "block";
-    await initialSettingAsync();
-  }
+async function page404() {
+  // Hide the index page
+  const indexPage = document.getElementById("index-page")!;
+  indexPage.style.display = "none";
 
   const apiKey = localStorage.getItem("api-key");
-  const genAI = new GoogleGenerativeAI(apiKey!);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-  console.log(model);
 
-  // get url without domain
-  const prompt = BASE_PROMPT + `https://example.com${window.location.pathname}`;
+  const client = getLlmClient(apiKey!);
 
-  console.log(prompt);
-  const result = await model.generateContent([prompt]);
-  const content = document.getElementById("content")!;
+  console.log("Generating content for 404 page...");
+  const url = `https://example.com${window.location.pathname}`;
+  console.log(SYSTEM_PROMPT, url);
+  const response = await client.generate(SYSTEM_PROMPT, url);
 
-  if (!result.response || typeof result.response.text !== 'function') {
-    console.error("Invalid response structure:", result);
+  const content = document.getElementById("404-page")!;
+
+  if (!response) {
+    console.error("Invalid response structure:", response);
     content.innerHTML = "Failed to generate content.";
   } else {
-    const text = result.response.text();
+    const text = response!;
     // remove ```html and ``` from the generated text
-    content.innerHTML = text.replace(/```html/g, "").replace(/```/g, "");
+    content.innerHTML = text.replace(/```html/g, "").replace(/```/g, "").trim();
   }
 }
 
-main();
+const isIndexPage = window.location.pathname === "/" || window.location.pathname === "/index.html";
+if (isIndexPage) {
+  pageIndex();
+}
+else {
+  page404();
+}
