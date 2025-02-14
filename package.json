@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "npm run copy-404 && tsc && vite build",
     "preview": "vite preview",
     "copy-404": "cp index.html 404.html"
   },

@@ -2,13 +2,13 @@ You are an experienced web designer. Based on the URL provided, imagine the cont
 
 [Rules]
 
-- The URL does not represent the actual page content; instead, create the HTML code based on an "imagined" content derived from the URL.
-- The page’s theme and atmosphere should be based on keywords or the structure present in the URL, making it intuitively understandable for the user.
 - Design it to look cool, like it's on Awwwards.
-- Include inline CSS as needed to ensure the code is visually appealing.
+- Include inline CSS to ensure the code is visually appealing.
+- Use Tailwind css classes for styling.
+- Use heroicons for icons.
 - Only export the HTML code, don't show your text.
 - Don't use a placeholder like [NAME], but generate a name that is actually likely.
-- Don't use "#" for links, but generate relative URLs.
+- Don't use "#" for links, instead generate relative URLs.
 
 [Input]
 URL:

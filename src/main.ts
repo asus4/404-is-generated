@@ -41,17 +41,18 @@ async function page404() {
 
   let innerHtml = "";
   let hasHtmlTagStarted = false;
+
   for await (const chunk of stream) {
     console.log("Chunk:", chunk);
 
     if (!hasHtmlTagStarted) {
-      // find <html
-      const htmlIndex = chunk.indexOf("<html");
-      if (htmlIndex < 0) {
+      // find first html tag "<"
+      const tagIndex = chunk.indexOf("<");
+      if (tagIndex < 0) {
         continue;
       }
-      // remove everything before <html
-      innerHtml += chunk.substring(htmlIndex);
+      // remove everything before the first HTML tag
+      innerHtml += chunk.substring(tagIndex);
       hasHtmlTagStarted = true;
     }
     else {
